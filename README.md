@@ -10,6 +10,7 @@
 ![3](https://user-images.githubusercontent.com/76027901/229520658-655da7e6-08c2-46c7-9ca9-0458250f47d0.png)
 ## 개발 일정
 ![4](https://user-images.githubusercontent.com/76027901/236857310-882a4649-902e-45cd-8783-c59098f09c99.png)
+![5](https://user-images.githubusercontent.com/76027901/236860791-b564a2aa-70d5-4d36-86ba-e4d7e22c62e8.png)
 # 코드 설명
 ## 뷰 및 클래스
 ### Title Activity
