@@ -19,3 +19,7 @@
     - "MyPrefs"의 "high_score" 변수로 저장됩니다.
 - startGameButton : 게임 화면인 Main Activity를 시작합니다.
 - hsPlusOneBuuton : 디버그(테스트)용 버튼으로, High Score를 1 증가시켜 저장합니다.
+# 자료 출처
+## Hooded Protagonist
+캐릭터 스프라이트
+https://penzilla.itch.io/hooded-protagonist
