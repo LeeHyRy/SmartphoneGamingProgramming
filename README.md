@@ -11,7 +11,7 @@
 ## 개발 일정
 ![4](https://user-images.githubusercontent.com/76027901/229520914-1b62df8b-6b25-488b-afd0-6a8979523e62.png)
 # 코드 설명
-## 뷰 리스트
+## 뷰 및 클래스
 ### Title Activity
 - highScoreText : 하이스코어를 출력합니다.
     - saveHighScore(int score) : SharedPreferences를 통해 하이스코어 저장
@@ -19,7 +19,17 @@
     - "MyPrefs"의 "high_score" 변수로 저장됩니다.
 - startGameButton : 게임 화면인 Main Activity를 시작합니다.
 - hsPlusOneBuuton : 디버그(테스트)용 버튼으로, High Score를 1 증가시켜 저장합니다.
+### Main Activity(Game Activity)
+- gameView : 게임 뷰입니다.
+- MainScene : 게임 씬을 담당하여 다른 게임 오브젝트들을 쌓습니다.
+- Player : 가운데에 위치할 플레이어에 대한 클래스입니다.
+- ScrollBackground : 플레이어가 움직일 때마다 움직일 배경 클래스입니다.
+# 어려워서 추가적으로 찾아본 부분
+- 자동생성되는 BuildConfig에 대한 조정
+- SharedPreferences 사용 (해결)
+- 조이스틱 구현
 # 자료 출처
-## Hooded Protagonist
-캐릭터 스프라이트
+## Hooded Protagonist (캐릭터 스프라이트)
 https://penzilla.itch.io/hooded-protagonist
+## Top Down Forest Tileset (배경 스프라이트)
+https://pixivan.itch.io/top-down-forest-tileset
