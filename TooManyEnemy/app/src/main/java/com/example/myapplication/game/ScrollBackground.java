@@ -17,6 +17,7 @@ public class ScrollBackground extends Sprite {
 
     @Override
     public void draw(Canvas canvas) {
+
         canvas.drawBitmap(bitmap, rects, dstRect, null);
     }
 }

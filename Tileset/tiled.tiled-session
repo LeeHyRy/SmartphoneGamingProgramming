@@ -1,0 +1,63 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "stage1.tmx",
+    "expandedProjectPaths": [
+        "TooManyEnemy",
+        "."
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "cliff.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 3
+        },
+        "grass.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "props.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "stage1.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": -821.3333333333333,
+                "y": 949.3333333333333
+            }
+        },
+        "water.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        }
+    },
+    "last.externalTilesetPath": "C:/androidgameprogramming/SmartphoneGamingProgramming/Tileset",
+    "last.imagePath": "C:/androidgameprogramming/SmartphoneGamingProgramming/Tileset",
+    "map.fixedSize": false,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "openFiles": [
+        "stage1.tmx",
+        "props.tsx",
+        "grass.tsx"
+    ],
+    "project": "tiled.tiled-project",
+    "recentFiles": [
+        "grass.tsx",
+        "props.tsx",
+        "stage1.tmx",
+        "cliff.tsx",
+        "water.tsx"
+    ],
+    "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}
