@@ -14,6 +14,7 @@ public class Player extends Sprite {
     private static final float FIGHTER_WIDTH= 32f * 0.03f;
     private static final float FIGHTER_HEIGHT= 32f * 0.03f;
     private float spriteframeTime;
+    public float x, y;
 
     private static final Rect[] rects = new Rect[] {
             new Rect(  0, 0,   0 + 32, 32),
