@@ -47,7 +47,7 @@
 
 # 어려워서 추가적으로 찾아본 부분
 
-- 자동생성되는 BuildConfig에 대한 조정
+- 자동생성되는 BuildConfig에 대한 조정 (해결)
 - SharedPreferences 사용 (해결)
 - 조이스틱 구현
 
