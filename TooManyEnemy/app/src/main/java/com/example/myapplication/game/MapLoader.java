@@ -5,34 +5,51 @@ import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.util.JsonReader;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Random;
 
 import framework.interfaces.IGameObject;
 import framework.scene.BaseScene;
 import framework.view.Metrics;
 
 public class MapLoader implements IGameObject {
-    private float x, y;
-    private Player player;
+    private static final String TAG = MapLoader.class.getSimpleName();
+    private Random random = new Random();
+    private float x;
+    private int index, mapLength;
+    private int columns;
+    private ArrayList<String> lines = new ArrayList<>();
 
-
-    private static final int STAGE_WIDTH = 16;
-    private static final int STAGE_HEIGHT = 16;
-
-    public MapLoader(Context context, Player pl){
-        loadStage(context, 1);
-        player = pl;
+    public MapLoader(Context context, int stage) {
+        loadStage(context, stage);
     }
 
+    public static final int STAGE_HEIGHT = 9;
     private void loadStage(Context context, int stage) {
         AssetManager assets = context.getAssets();
         try {
-            String file = "stage1.json";
+            String file = String.format("stage%01d.txt", stage);
             InputStream is = assets.open(file);
-            InputStreamReader jsr = new InputStreamReader(is);
-            JsonReader jr = new JsonReader(jsr);
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader reader = new BufferedReader(isr);
+            String line = reader.readLine();
+            lines.add(line);
+            columns = line.indexOf('|');
+            if (columns <= 0) return;
+
+            while (true) {
+                line = reader.readLine();
+                if (line == null) break;
+                lines.add(line);
+            }
+
+            int pages = lines.size() / STAGE_HEIGHT;
+            int lastCol = lines.get(lines.size() - 1).length();
+            mapLength = (pages - 1) * columns + lastCol;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -40,43 +57,60 @@ public class MapLoader implements IGameObject {
 
     @Override
     public void update() {
-        if (x != player.x || y != player.y) {
-            x = player.x;
-            y = player.y;
-            createPlatform();
+        x -= MapObject.SPEED * BaseScene.frameTime;
+        float left = x + index;
+        while (left < Metrics.game_width) {
+            createColumn(left);
+            index++;
+            left += 1.0f;
         }
     }
 
-    private void createPlatform() {
+    private void createColumn(float left) {
         for (int row = 0; row < STAGE_HEIGHT; row++) {
-            for (int col = 0; col < STAGE_WIDTH; col++) {
-                int tile = getAt(col, row);
-                createObject(tile, col, row);
-            }
+            int tile = getAt(index, row);
+            createObject(tile, left, row);
         }
     }
 
     private void createObject(int tile, float left, int top) {
         MainScene scene = (MainScene) BaseScene.getTopScene();
-        if (tile == 61 || tile == 71 || tile == 73) {
-            Platform.Type ptype =
-                    tile == 61 ? Platform.Type.T_10x2 :
-                            tile == 71 ? Platform.Type.T_2x2 :
-                                    Platform.Type.T_3x1;
-            Platform platform = Platform.get(ptype, left, top);
-            scene.add(MainScene.Layer.platform, platform);
-            return;
+        MapObject mobj = null;
+        if ('0' <= tile && tile <= '9') {
+            mobj = JellyItem.get(tile - '0', left, top);
+        } else if (tile == '@') {
+            mobj = JellyItem.get(26, left, top);
+        } else if ('O' <= tile && tile <= 'Q') {
+            mobj = Platform.get(tile - 'O', left, top);
+        } else switch (tile) {
+            case 'X': case 'Y': case 'Z':
+                mobj = Obstacle.get(tile - 'X', left, top);
+                break;
+            case 'W':
+                mobj = Obstacle.get(3, left, top);
+                break;
+        }
+
+        if (mobj != null) {
+            scene.add(mobj.layer, mobj);
         }
     }
 
     private int getAt(int col, int row) {
-        int idx = row * STAGE_WIDTH + col;
-        if (idx >= STAGES[0].length) return 0;
-        return STAGES[0][idx];
+        try {
+            int lineIndex = col / columns * STAGE_HEIGHT + row;
+            String line = lines.get(lineIndex);
+            return line.charAt(col % columns);
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
-
     @Override
-    public void draw(Canvas canvas) {}
-
+    public void draw(Canvas canvas) {
+        canvas.save();
+        canvas.translate(2.0f, 1.0f);
+        canvas.scale(12.0f, 14.0f);
+        canvas.restore();
+    }
 }

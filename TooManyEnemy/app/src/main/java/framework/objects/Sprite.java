@@ -14,6 +14,7 @@ public class Sprite implements IGameObject {
     protected Bitmap bitmap;
     protected RectF dstRect = new RectF();
     protected float x, y, width, height;
+    protected Sprite() {}
     public Sprite(int bitmapResId, float cx, float cy, float width, float height) {
         this.x = cx;
         this.y = cy;
@@ -41,6 +42,9 @@ public class Sprite implements IGameObject {
         dstRect.set(x - half_width, y - half_height, x + half_width, y + half_height);
     }
 
+    public float getDstHeight() {
+        return dstRect.height();
+    }
     @Override
     public void update() {
     }
