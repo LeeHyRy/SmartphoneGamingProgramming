@@ -13,7 +13,7 @@ public class MainScene extends BaseScene {
     protected Selector selector;
     protected Joystick joystick;
     public enum Layer {
-        bg, item, monster, player, controller, joystick, COUNT
+        bg, item, monster, shell, player, controller, joystick, COUNT
     }
     public MainScene() {
         player = new Player();
