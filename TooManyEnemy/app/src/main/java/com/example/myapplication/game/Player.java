@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import framework.interfaces.IGameObject;
 import framework.objects.Sprite;
+import framework.res.Sound;
 import framework.scene.BaseScene;
 import framework.util.Gauge;
 import framework.view.Metrics;
@@ -66,6 +67,7 @@ public class Player extends Sprite {
         }
         if (time > stat.interval && fly != null) {
             Shell shell = Shell.get(this, fly);
+            Sound.playEffect(R.raw.shoot);
             BaseScene.getTopScene().add(MainScene.Layer.shell, shell);
             time = 0;
         }
