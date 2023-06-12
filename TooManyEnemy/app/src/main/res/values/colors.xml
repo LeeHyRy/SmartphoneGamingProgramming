@@ -11,4 +11,6 @@
     <color name="main_title_text">#A555EC</color>
     <color name="main_bg">#FFFFD0</color>
     <color name="main_title_line">#D09CFA</color>
+    <color name="exp">#F2BE22</color>
+    <color name="hp">#F24C3D</color>
 </resources>

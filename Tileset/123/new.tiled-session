@@ -1,5 +1,9 @@
 {
-    "activeFile": "realstage.tmj",
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "untitled.tmj",
     "expandedProjectPaths": [
         "."
     ],
@@ -8,8 +12,8 @@
             "scale": 0.8827083333333333,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 240.16993155534578,
-                "y": 480.3398631106915
+                "x": 239.60349303752656,
+                "y": 478.6405475572339
             }
         },
         "realstage.tmj#Forest Tilesett": {
@@ -23,20 +27,47 @@
         },
         "realstage.tmj#propsEmbed": {
             "scaleInDock": 1
+        },
+        "ui.tmj": {
+            "scale": 0.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 126,
+                "y": 178
+            }
+        },
+        "ui.tmj#GUI_4x": {
+            "scaleInDock": 0.75
+        },
+        "untitled.tmj": {
+            "scale": 1.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 182.66666666666666,
+                "y": 36
+            }
+        },
+        "untitled.tmj#buttons_4x": {
+            "scaleInDock": 1
         }
     },
-    "last.imagePath": "C:/androidgameprogramming/SmartphoneGamingProgramming/Tileset",
+    "last.imagePath": "C:/Users/lyong/OneDrive/Desktop/crafting_materials/Cryo's Mini GUI/Buttons",
+    "map.fixedSize": false,
     "map.lastUsedFormat": "json",
     "openFiles": [
-        "realstage.tmj"
+        "realstage.tmj",
+        "ui.tmj",
+        "untitled.tmj"
     ],
     "project": "new.tiled-project",
     "recentFiles": [
-        "realstage.tmj"
+        "realstage.tmj",
+        "ui.tmj",
+        "untitled.tmj"
     ],
     "tileset.embedInMap": true,
     "tileset.tileSize": {
-        "height": 16,
-        "width": 16
+        "height": 32,
+        "width": 32
     }
 }

@@ -24,18 +24,18 @@ public class Gauge {
         fgPaint.setColor(ResourcesCompat.getColor(res, fgColorResId, null));
         fgPaint.setStrokeCap(Paint.Cap.ROUND);
     }
-    public void draw(Canvas canvas, float value) {
-        canvas.drawLine(0, 0, 1.0f, 0.0f, bgPaint);
+    public void draw(Canvas canvas, float value, float length) {
+        canvas.drawLine(0, 0, length, 0.0f, bgPaint);
         if (value > 0) {
-            canvas.drawLine(0, 0, value, 0.0f, fgPaint);
+            canvas.drawLine(0, 0, length * value, 0.0f, fgPaint);
         }
     }
 
-    public void draw(Canvas canvas, float x, float y, float scale, float value) {
+    public void draw(Canvas canvas, float x, float y, float scale, float length, float value) {
         canvas.save();
         canvas.translate(x, y);
         canvas.scale(scale, scale);
-        draw(canvas, value);
+        draw(canvas, value, length);
         canvas.restore();
     }
 }

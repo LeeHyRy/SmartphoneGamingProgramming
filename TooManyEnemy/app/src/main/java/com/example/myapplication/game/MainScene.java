@@ -2,8 +2,11 @@ package com.example.myapplication.game;
 
 import android.view.MotionEvent;
 
+import com.example.myapplication.R;
+
 import java.nio.channels.Selector;
 
+import framework.objects.Score;
 import framework.scene.BaseScene;
 import framework.view.Metrics;
 
@@ -13,7 +16,7 @@ public class MainScene extends BaseScene {
     protected Selector selector;
     protected Joystick joystick;
     public enum Layer {
-        bg, item, monster, shell, player, controller, joystick, COUNT
+        bg, item, monster, shell, player, score, controller, joystick, COUNT
     }
     public MainScene() {
         player = new Player();
@@ -26,8 +29,9 @@ public class MainScene extends BaseScene {
         initLayers(Layer.COUNT);
         TiledBackground tiledBg = new TiledBackground("map", "realstage.tmj");
         add(Layer.bg, tiledBg);
-        add(Layer.controller, new FlyGen());
         add(Layer.player, player);
+        add(Layer.score, player.stat.score);
+        add(Layer.controller, new FlyGen());
         joystick = new Joystick();
         add(Layer.joystick, joystick);
 

@@ -32,7 +32,7 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="297dp"
         android:layout_centerInParent="true"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -56,22 +56,13 @@
             android:id="@+id/start_game_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center_horizontal"
             android:backgroundTint="@color/main_title_text"
-            android:textColor="@color/main_bg"
             android:onClick="onBtnStart"
             android:text="Start Game"
+            android:textColor="@color/main_bg"
             android:textSize="30sp" />
 
-        <Button
-            android:id="@+id/hs_plus_one_buuton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/main_title_text"
-            android:textColor="@color/main_bg"
-            android:text="HS+1(test)"
-            android:textSize="30sp" />
     </LinearLayout>
 
 

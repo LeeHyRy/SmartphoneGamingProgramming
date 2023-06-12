@@ -28,40 +28,7 @@ public class Fly extends SheetSprite implements IRecyclable {
     private Player player;
 
     private static Random random = new Random();
-    private static Path path;
-    private static PathMeasure pm;
-    private static final float length;
-//    private static Paint paint;
 
-    static {
-        path = new Path();
-        path.moveTo(-1.28f, 18.176f);
-        path.cubicTo(1.984f, 17.856f, 3.84f, 15.584f, 3.84f, 12.8f);
-        path.cubicTo(3.84f, 10.016f, 0.864f, 9.568f, 0.896f, 6.56f);
-        path.cubicTo(0.928f, 3.552f, 3.328f, 0.544f, 6.4f, 0.512f);
-        path.cubicTo(9.472f, 0.48f, 11.776f, 3.392f, 11.84f, 6.496f);
-        path.cubicTo(11.904f, 9.6f, 9.888f, 9.248f, 9.92f, 12.512f);
-        path.cubicTo(9.952f, 15.776f, 14.4f, 16.928f, 16.096f, 16.928f);
-        path.cubicTo(17.792f, 16.928f, 22.176f, 15.168f, 22.208f, 12.64f);
-        path.cubicTo(22.24f, 10.112f, 19.936f, 9.408f, 19.936f, 6.624f);
-        path.cubicTo(19.936f, 3.84f, 22.368f, 0.832f, 25.76f, 0.864f);
-        path.cubicTo(29.152f, 0.896f, 31.2f, 4.192f, 31.104f, 6.752f);
-        path.cubicTo(31.008f, 9.312f, 28.16f, 10.784f, 28.192f, 13.408f);
-        path.cubicTo(28.224f, 16.032f, 31.552f, 17.824f, 33.6f, 17.664f);
-
-
-        pm = new PathMeasure(path, false);
-        length = pm.getLength();
-
-//        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-//        paint.setStyle(Paint.Style.STROKE);
-//        paint.setStrokeWidth(0.1f);
-//        paint.setColor(Color.MAGENTA);
-    }
-
-//    public static void drawPath(Canvas canvas) {
-//        canvas.drawPath(path, paint);
-//    }
 
     public enum Type {
         boss, red, blue, cyan, dragon, COUNT, RANDOM;
@@ -69,7 +36,7 @@ public class Fly extends SheetSprite implements IRecyclable {
             return HEALTHS[ordinal()];
         }
         static float[] HEALTHS = { 150, 50, 30, 20, 10 };
-        static int[] POSSIBILITIES = { 0, 10, 20, 30, 40 };
+        static int[] POSSIBILITIES = { 0, 5, 10, 30, 55 };
         static int POSSIBILITY_SUM;
         static {
             POSSIBILITY_SUM = 0;
@@ -130,11 +97,11 @@ public class Fly extends SheetSprite implements IRecyclable {
             }
         }
         this.type = type;
-        this.speed = speed;
+        this.speed = speed * (float)Math.min(3, Math.pow(1.1, player.stat.waves));
         this.width = this.height = size;
         this.distance = 0;
         dx = dy = 0;
-        health = maxHealth = type.getMaxHealth() * (0.9f + random.nextFloat() * 0.2f);
+        health = maxHealth = type.getMaxHealth() * (0.9f + random.nextFloat() * 0.2f) * (float)Math.pow(1.1, player.stat.waves);
         srcRects = rects_array[0];
 
         findAndMovePlayer();
@@ -153,6 +120,12 @@ public class Fly extends SheetSprite implements IRecyclable {
         if (distance != 0) {
             moveX = (dx / distance) * speed;
             moveY = (dy / distance) * speed;
+        }
+        if (distance < 1.5f){
+            MainScene scene = (MainScene) BaseScene.getTopScene();
+            player.stat.getDamage(Math.round(this.health));
+            scene.remove(MainScene.Layer.monster, this);
+            return;
         }
 
         moveTo(x + moveX * BaseScene.frameTime, y + moveY * BaseScene.frameTime);
@@ -174,9 +147,12 @@ public class Fly extends SheetSprite implements IRecyclable {
         else if (dy > maxDiff) dy = maxDiff;
 
         findAndMovePlayer();
+        /*
         if (distance > length) {
             BaseScene.getTopScene().remove(MainScene.Layer.monster, this);
         }
+
+         */
     }
 
     @Override
@@ -189,7 +165,7 @@ public class Fly extends SheetSprite implements IRecyclable {
         if (gauge == null) {
             gauge = new Gauge(0.2f, R.color.teal_200, R.color.black);
         }
-        gauge.draw(canvas, x - size / 2, y + size / 2, size, health / maxHealth);
+        gauge.draw(canvas, x - size / 2, y + size / 2, size,1f, health / maxHealth);
     }
 
     @Override

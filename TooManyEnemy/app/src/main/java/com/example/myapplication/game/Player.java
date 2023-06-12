@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import framework.interfaces.IGameObject;
 import framework.objects.Sprite;
 import framework.scene.BaseScene;
+import framework.util.Gauge;
 import framework.view.Metrics;
 
 public class Player extends Sprite {
@@ -18,10 +19,10 @@ public class Player extends Sprite {
     private static final float FIGHTER_HEIGHT= 64f * 0.03f;
     private float spriteframeTime;
     private float time;
-    public int level = 1;
-    public float power = 10;
-    public float interval = 3.0f;
+
+    public Stat stat = new Stat();
     public float attackAngle = -90;
+    private Gauge expGauge, hpGauge;
 
     private static final Rect[] rects = new Rect[] {
             new Rect(  0, 0,   0 + 32, 32),
@@ -39,14 +40,18 @@ public class Player extends Sprite {
         );
     }
 
-    private void setLevel(int level) {
-        this.level = level;
-        this.power = (float) (10 * Math.pow(1.2, level - 1));
-        this.interval = 3.0f * (float)(Math.pow(0.80, level - 1));
-    }
+
 
     public void move(float dx, float dy) {
-        moveTo(x + dx* BaseScene.frameTime, y + dy* BaseScene.frameTime);
+        float newX = x + dx* BaseScene.frameTime*stat.speed;
+        float newY = y + dy* BaseScene.frameTime*stat.speed;
+        float offset = 0.75f;
+        if (newX > 18f - offset) newX = 18f - offset;
+        else if (newX < offset) newX = offset;
+        if (newY > 32f - offset) newY = 32f - offset;
+        else if (newY < offset) newY = offset;
+
+        moveTo(newX, newY);
         fixDstRect();
     }
 
@@ -59,7 +64,7 @@ public class Player extends Sprite {
         if (fly != null) {
             attackAngle = (float) (Math.atan2(fly.getY() - y, fly.getX() - x) / Math.PI * 180);
         }
-        if (time > interval && fly != null) {
+        if (time > stat.interval && fly != null) {
             Shell shell = Shell.get(this, fly);
             BaseScene.getTopScene().add(MainScene.Layer.shell, shell);
             time = 0;
@@ -94,5 +99,12 @@ public class Player extends Sprite {
     public void draw(Canvas canvas) {
         int rollIndex = (int)(spriteframeTime)%2;
         canvas.drawBitmap(bitmap, rects[rollIndex], dstRect, null);
+
+        if (expGauge == null){
+            expGauge = new Gauge(0.4f, R.color.exp, R.color.black);
+            hpGauge =  new Gauge(0.2f, R.color.hp, R.color.black);
+        }
+        expGauge.draw(canvas, 0, 31, 1f, 18f, (float)stat.exp/(float)stat.levelupExp);
+        hpGauge.draw(canvas, x - width / 2, y + height / 2, width,1f, (float)stat.hp / stat.maxHp);
     }
 }

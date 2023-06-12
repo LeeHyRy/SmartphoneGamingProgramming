@@ -14,7 +14,8 @@ public class Exporb extends Sprite implements IRecyclable {
     private static final int gap = 264/11;
     private Player player;
     private float speed = 0.f;
-    private float gatherDist = 5.f;
+
+    private int exp = 1;
     private Rect srcRect
             = new Rect(gap*2, gap*2, gap*3, gap*3);
 
@@ -28,17 +29,19 @@ public class Exporb extends Sprite implements IRecyclable {
         );
         player = (Player)BaseScene.getTopScene().getObjectsAt(MainScene.Layer.player).get(0);
     }
-    private void init() {
+    private void init(Fly fly) {
         speed = 0.f;
-        gatherDist = 5.f;
+        player.stat.gatherDist = 5.f;
+        exp = fly.score()/2;
+        moveTo(fly.getX(), fly.getY());
     }
 
-    public static Exporb get() {
+    public static Exporb get(Fly target) {
         Exporb exporb = (Exporb) RecycleBin.get(Exporb.class);
         if (exporb == null) {
             exporb = new Exporb();
         }
-        exporb.init();
+        exporb.init(target);
         return exporb;
     }
 
@@ -47,11 +50,11 @@ public class Exporb extends Sprite implements IRecyclable {
         float playerY = player.getY();
 
         float dx = playerX - x;
-        if (dx > gatherDist) return;
+        if (dx > player.stat.gatherDist) return;
         float dy = playerY - y;
-        if (dy > gatherDist) return;
+        if (dy > player.stat.gatherDist) return;
         float distance = (float) Math.sqrt(dx * dx + dy * dy);
-        if (distance > gatherDist) return;
+        if (distance > player.stat.gatherDist) return;
 
         float moveX = 0;
         float moveY = 0;
@@ -65,6 +68,7 @@ public class Exporb extends Sprite implements IRecyclable {
         else {
             MainScene scene = (MainScene) BaseScene.getTopScene();
             scene.remove(MainScene.Layer.item, this);
+            player.stat.getExp(exp);
         }
 
         moveTo(x + moveX * BaseScene.frameTime, y + moveY * BaseScene.frameTime);

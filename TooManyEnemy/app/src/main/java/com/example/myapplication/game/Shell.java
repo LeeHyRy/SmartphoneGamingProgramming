@@ -21,6 +21,8 @@ public class Shell extends Sprite implements IRecyclable {
     private float power;
     private boolean splash;
 
+    private MainScene scene = (MainScene) BaseScene.getTopScene();
+
     private Shell() {
         super(R.mipmap.shells, 0, 0, 0.5f, 0.5f);
     }
@@ -38,7 +40,7 @@ public class Shell extends Sprite implements IRecyclable {
         int w = bitmap.getWidth();
         int h = bitmap.getHeight();
         int maxLevel = w / h;
-        int level = player.level;
+        int level = player.stat.level;
         if (level < 1) level = 1;
         if (level > maxLevel) level = maxLevel;
         srcRect.set(h * (level - 1), 0, h * level, h);
@@ -50,7 +52,7 @@ public class Shell extends Sprite implements IRecyclable {
         double speed = 10.0 + level;
         dx = (float) (speed * Math.cos(radian));
         dy = (float) (speed * Math.sin(radian));
-        this.power = player.power;
+        this.power = player.stat.power;
         radius = 0.2f + level * 0.02f;
         splash = level >= 4;
         setSize(2 * radius, 2 * radius);
@@ -87,7 +89,6 @@ public class Shell extends Sprite implements IRecyclable {
         if (dist >= radius + flyRadius) {
             return false;
         }
-        MainScene scene = (MainScene) BaseScene.getTopScene();
         scene.remove(MainScene.Layer.shell, this);
         /*
         if (splash) {
@@ -104,12 +105,11 @@ public class Shell extends Sprite implements IRecyclable {
         if (!dead) {
             return;
         }
-        MainScene scene = (MainScene) BaseScene.getTopScene();
         this.target = null;
         //scene.score.add(target.score());
+        ((Player)BaseScene.getTopScene().getObjectsAt(MainScene.Layer.player).get(0)).stat.score.add(target.score());
         scene.remove(MainScene.Layer.monster, target);
-        Exporb exporb = Exporb.get();
-        exporb.moveTo(target.getX(), target.getY());
+        Exporb exporb = Exporb.get(target);
         scene.add(MainScene.Layer.item, exporb);
         for (IGameObject o: scene.getObjectsAt(MainScene.Layer.shell)) {
             Shell s = (Shell)o;
