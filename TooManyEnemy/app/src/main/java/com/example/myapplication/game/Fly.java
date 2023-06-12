@@ -25,6 +25,7 @@ public class Fly extends SheetSprite implements IRecyclable {
     private float dx, dy;
     private float health, maxHealth;
     private static Gauge gauge;
+    private Player player;
 
     private static Random random = new Random();
     private static Path path;
@@ -98,6 +99,7 @@ public class Fly extends SheetSprite implements IRecyclable {
 
     private Fly() {
         super(R.mipmap.slime, 2.0f);
+        player = (Player)BaseScene.getTopScene().getObjectsAt(MainScene.Layer.player).get(0);
         if (rects_array == null) {
             int w = bitmap.getWidth();
             int h = bitmap.getHeight();
@@ -135,8 +137,26 @@ public class Fly extends SheetSprite implements IRecyclable {
         health = maxHealth = type.getMaxHealth() * (0.9f + random.nextFloat() * 0.2f);
         srcRects = rects_array[0];
 
-        pm.getPosTan(0, pos, tan);
-        moveTo(pos[0], pos[1]);
+        findAndMovePlayer();
+    }
+
+    private void findAndMovePlayer(){
+        float playerX = player.getX();
+        float playerY = player.getY();
+
+        float dx = playerX - x;
+        float dy = playerY - y;
+        float distance = (float) Math.sqrt(dx * dx + dy * dy);
+
+        float moveX = 0;
+        float moveY = 0;
+        if (distance != 0) {
+            moveX = (dx / distance) * speed;
+            moveY = (dy / distance) * speed;
+        }
+
+        moveTo(x + moveX * BaseScene.frameTime, y + moveY * BaseScene.frameTime);
+        angle = (float) Math.toDegrees(Math.atan2(moveY, moveX));
     }
 
     private float[] pos = new float[2];
@@ -153,9 +173,7 @@ public class Fly extends SheetSprite implements IRecyclable {
         if (dy < -maxDiff) dy = -maxDiff;
         else if (dy > maxDiff) dy = maxDiff;
 
-        pm.getPosTan(distance, pos, tan);
-        moveTo(pos[0] + dx, pos[1] + dy);
-        angle = (float)(Math.atan2(tan[1], tan[0]) * 180 / Math.PI) ;
+        findAndMovePlayer();
         if (distance > length) {
             BaseScene.getTopScene().remove(MainScene.Layer.monster, this);
         }
