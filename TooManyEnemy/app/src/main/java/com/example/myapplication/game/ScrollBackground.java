@@ -1,46 +1,33 @@
 package com.example.myapplication.game;
 
-import android.content.Context;
-import android.content.res.AssetManager;
 import android.graphics.Canvas;
-import android.graphics.Rect;
-import android.util.JsonReader;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import framework.objects.Sprite;
+import framework.scene.BaseScene;
 import framework.view.Metrics;
 
 public class ScrollBackground extends Sprite {
 
-    private float BG_WIDTH=32*0.03f;
-    private Rect rects;
-    public ScrollBackground(int bitmapResId, int x, int y, int size) {
-        super(bitmapResId, Metrics.game_width / 2, Metrics.game_height / 2, Metrics.game_width, Metrics.game_height);
-        rects = new Rect(size*x,size*y,size*(x+1),size*(y+1));
+    private final float speed;
+    public ScrollBackground(int bitmapResId, float speed) {
+        setBitmapResource(bitmapResId);
+        this.width = bitmap.getWidth() * Metrics.game_height / bitmap.getHeight();
+        this.speed = speed;
+    }
+
+    @Override
+    public void update() {
+        x += speed * BaseScene.frameTime;
     }
 
     @Override
     public void draw(Canvas canvas) {
-
-        canvas.drawBitmap(bitmap, rects, dstRect, null);
-    }
-
-    public void update(Context context) {
-        loadStage(context, 1);
-    }
-
-    private void loadStage(Context context, int stage) {
-        AssetManager assets = context.getAssets();
-        try {
-            String file = "stage1.json";
-            InputStream is = assets.open(file);
-            InputStreamReader jsr = new InputStreamReader(is);
-            JsonReader jr = new JsonReader(jsr);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        float curr = x % width;
+        if (curr > 0) curr -= width;
+        while (curr < Metrics.game_width) {
+            dstRect.set(curr, 0, curr + width, Metrics.game_height);
+            canvas.drawBitmap(bitmap, null, dstRect, null);
+            curr += width;
         }
     }
 }

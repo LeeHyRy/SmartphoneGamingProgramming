@@ -28,7 +28,7 @@ public class Platform extends MapObject {
         }
     }
     private Platform() {
-        super(MainScene.Layer.platform1);
+        super(MainScene.Layer.bg);
     }
     public static Platform get(int type, float left, float top) {
         return get(Type.values()[type], left, top);

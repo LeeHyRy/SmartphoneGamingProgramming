@@ -13,8 +13,9 @@ public class Sprite implements IGameObject {
     private static final String TAG = Sprite.class.getSimpleName();
     protected Bitmap bitmap;
     protected RectF dstRect = new RectF();
+
     protected float x, y, width, height;
-    protected Sprite() {}
+    protected Sprite() {} // 상속받은 class 에서 자유롭게 생성자를 만들 수 있도록 default 생성자를 추가한다
     public Sprite(int bitmapResId, float cx, float cy, float width, float height) {
         this.x = cx;
         this.y = cy;
@@ -28,6 +29,18 @@ public class Sprite implements IGameObject {
         Log.v(TAG, "Created " + this.getClass().getSimpleName() + "@" + System.identityHashCode(this));
     }
 
+    public float getX() { return x; }
+    public float getY() { return y; }
+    public float getWidth() { return width; }
+    public float getHeight() { return height; }
+    public float getDstWidth() {
+        return dstRect.width();
+    }
+
+    public float getDstHeight() {
+        return dstRect.height();
+    }
+
     protected void setBitmapResource(int bitmapResId) {
         bitmap = BitmapPool.get(bitmapResId);
     }
@@ -37,14 +50,13 @@ public class Sprite implements IGameObject {
     }
 
     protected void setSize(float width, float height) {
+        this.width = width;
+        this.height = height;
         float half_width = width / 2;
         float half_height = height / 2;
         dstRect.set(x - half_width, y - half_height, x + half_width, y + half_height);
     }
 
-    public float getDstHeight() {
-        return dstRect.height();
-    }
     @Override
     public void update() {
     }
@@ -54,4 +66,9 @@ public class Sprite implements IGameObject {
         canvas.drawBitmap(bitmap, null, dstRect, null);
     }
 
+    public void moveTo(float x, float y) {
+        this.x = x;
+        this.y = y;
+        fixDstRect();
+    }
 }

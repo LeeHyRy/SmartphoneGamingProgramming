@@ -1,23 +1,36 @@
 package com.example.myapplication.game;
 
-import android.content.Context;
+import java.nio.channels.Selector;
 
-import androidx.constraintlayout.helper.widget.Layer;
-
-import com.example.myapplication.R;
 import framework.scene.BaseScene;
+import framework.view.Metrics;
 
 public class MainScene extends BaseScene {
-    private final Player player;
 
+    protected Selector selector;
     public enum Layer {
-        platform1, item, monster, player, COUNT
+        bg, item, monster, player, controller, COUNT
+    }
+    public MainScene() {
+        Metrics.setGameSize(32, 18);
     }
 
-    public MainScene() {
+    @Override
+    protected void onStart() {
+        super.onStart();
         initLayers(Layer.COUNT);
-        player = new Player();
-        add(Layer.player, player);
-        add(Layer.platform1, new ScrollBackground(R.mipmap.platform,7, 1, 16));
+        TiledBackground tiledBg = new TiledBackground("map", "stage1.tmj");
+        add(Layer.bg, tiledBg);
+        add(Layer.controller, new FlyGen());
     }
+    @Override
+    public boolean handleBackKey() {
+        new BaseScene() {
+            @Override
+            public boolean isTransparent() { return true; }
+        }.pushScene();
+        return true;
+    }
+
+
 }

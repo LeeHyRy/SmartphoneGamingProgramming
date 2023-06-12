@@ -1,6 +1,8 @@
 package framework.view;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,12 +15,10 @@ import android.view.View;
 import framework.scene.BaseScene;
 import com.example.myapplication.BuildConfig;
 
-/**
- * TODO: document your custom view class.
- */
 public class GameView extends View implements Choreographer.FrameCallback {
     private static final String TAG = GameView.class.getSimpleName();
     public static Resources res;
+    public static GameView view;
     //    private Ball ball1, ball2;
     protected Paint fpsPaint;
     protected Paint borderPaint;
@@ -38,10 +38,16 @@ public class GameView extends View implements Choreographer.FrameCallback {
         init(attrs, defStyle);
     }
 
+    public static void clear() {
+        view = null;
+        res = null;
+    }
+
     public void setFullScreen() {
         setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
     private void init(AttributeSet attrs, int defStyle) {
+        GameView.view = this;
         GameView.res = getResources();
 
         running = true;
@@ -60,17 +66,12 @@ public class GameView extends View implements Choreographer.FrameCallback {
         //setFullScreen();
     }
 
-    private long previousNanos;
     @Override
     public void doFrame(long nanos) {
-        if (previousNanos != 0) {
-            long elapsedNanos = nanos - previousNanos;
-            BaseScene scene = BaseScene.getTopScene();
-            if (scene != null) {
-                scene.update(elapsedNanos);
-            }
+        BaseScene scene = BaseScene.getTopScene();
+        if (scene != null) {
+            scene.update(nanos);
         }
-        previousNanos = nanos;
         invalidate();
         if (running) {
             Choreographer.getInstance().postFrameCallback(this);
@@ -123,7 +124,10 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        boolean handled = BaseScene.getTopScene().onTouchEvent(event);
+        BaseScene topScene = BaseScene.getTopScene();
+        if (topScene == null) return false;
+
+        boolean handled = topScene.onTouchEvent(event);
         if (handled) {
             return true;
         }
@@ -132,14 +136,35 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     public void pauseGame() {
         running = false;
+        BaseScene topScene = BaseScene.getTopScene();
+        if (topScene == null) return;
+        topScene.pauseScene();
     }
 
     public void resumeGame() {
         if (running) {
             return;
         }
-        previousNanos = 0;
         running = true;
+
+        BaseScene.getTopScene().resumeScene();
         Choreographer.getInstance().postFrameCallback(this);
+    }
+
+    public Activity getActivity() {
+        Context context = getContext();
+        while (context instanceof ContextWrapper) {
+            if (context instanceof Activity) {
+                return (Activity)context;
+            }
+            context = ((ContextWrapper)context).getBaseContext();
+        }
+        return null;
+    }
+
+    public boolean handleBackKey() {
+        BaseScene topScene = BaseScene.getTopScene();
+        if (topScene == null) return false;
+        return topScene.handleBackKey();
     }
 }

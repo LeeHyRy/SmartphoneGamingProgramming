@@ -1,5 +1,6 @@
 package framework.util;
 
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
@@ -15,11 +16,12 @@ public class Gauge {
         bgPaint.setStyle(Paint.Style.STROKE);
         bgPaint.setStrokeWidth(width);
         // Gauge 생성 시점이 GameView.res 가 설정된 이후여야 한다.
-        bgPaint.setColor(ResourcesCompat.getColor(GameView.res, bgColorResId, null));
+        Resources res = GameView.view.getResources();
+        bgPaint.setColor(ResourcesCompat.getColor(res, bgColorResId, null));
         bgPaint.setStrokeCap(Paint.Cap.ROUND);
         fgPaint.setStyle(Paint.Style.STROKE);
         fgPaint.setStrokeWidth(width / 2);
-        fgPaint.setColor(ResourcesCompat.getColor(GameView.res, fgColorResId, null));
+        fgPaint.setColor(ResourcesCompat.getColor(res, fgColorResId, null));
         fgPaint.setStrokeCap(Paint.Cap.ROUND);
     }
     public void draw(Canvas canvas, float value) {
@@ -27,5 +29,13 @@ public class Gauge {
         if (value > 0) {
             canvas.drawLine(0, 0, value, 0.0f, fgPaint);
         }
+    }
+
+    public void draw(Canvas canvas, float x, float y, float scale, float value) {
+        canvas.save();
+        canvas.translate(x, y);
+        canvas.scale(scale, scale);
+        draw(canvas, value);
+        canvas.restore();
     }
 }
