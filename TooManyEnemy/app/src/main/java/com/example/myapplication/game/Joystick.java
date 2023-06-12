@@ -1,46 +1,83 @@
 package com.example.myapplication.game;
 
+import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.view.MotionEvent;
 
-public class Joystick {
-    public boolean onTouchEvent(MotionEvent event) {
-        int action = event.getAction();
+import framework.objects.Sprite;
+import framework.scene.BaseScene;
+import com.example.myapplication.R;
+
+public class Joystick extends Sprite {
+
+    private Player player;
+    private static float centerX = 9;
+    private static float centerY = 26;
+
+    private static final float maxDistance = 2;
+    private static final Rect rects
+            = new Rect(0, 0, 300, 300);
+
+    public Joystick(){
+        super(
+            R.mipmap.joystick,
+            centerX,
+            centerY,
+            maxDistance,
+            maxDistance
+        );
+        player = (Player)BaseScene.getTopScene().getObjectsAt(MainScene.Layer.player).get(0);
+
+    }
+
+    public boolean onTouch(int action, float gx, float gy) {
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
-                float touchX = event.getX();
-                float touchY = event.getY();
-                handleJoystickMovement(touchX, touchY);
+                handleJoystickMovement(gx, gy);
                 break;
             case MotionEvent.ACTION_UP:
-                // 조이스틱을 중앙으로 초기화하는 로직 추가 (옵션)
+                dx = 0;
+                dy = 0;
+                moveTo(centerX, centerY);
                 break;
         }
 
         return true;
     }
 
-    private void handleJoystickMovement(float touchX, float touchY) {
-        float centerX = 9;
-        float centerY = 21;
+    private float dx = 0f;
+    private float dy = 0f;
 
-        float maxDistance = 2;
+    private void handleJoystickMovement(float gx, float gy) {
 
-        float dx = touchX - centerX;
-        float dy = touchY - centerY;
+        dx = gx - centerX;
+        dy = gy - centerY;
         float distance = (float) Math.sqrt(dx * dx + dy * dy);
 
         if (distance > maxDistance) {
             // 조이스틱을 최대 이동 반경 내에서 제한
             dx = (dx / distance) * maxDistance;
             dy = (dy / distance) * maxDistance;
+
+            moveTo(centerX + dx, centerY + dy);
+        }
+        else {
+            moveTo(gx, gy);
         }
 
-        // 플레이어의 위치 업데이트
 
         // 나머지 게임 요소의 스크롤 처리 (예: 배경, 장애물 등)
     }
 
+    @Override
+    public void update(){
+        player.move(dx, dy);
+    }
 
+    @Override
+    public void draw(Canvas canvas) {
+        canvas.drawBitmap(bitmap, rects, dstRect, null);
+    }
 }

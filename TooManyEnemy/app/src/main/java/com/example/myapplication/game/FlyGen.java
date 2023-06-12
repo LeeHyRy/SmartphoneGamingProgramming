@@ -10,7 +10,7 @@ import framework.scene.BaseScene;
 
 public class FlyGen implements IGameObject {
 
-    private static final float GEN_INTERVAL = 1.0f;
+    private static final float GEN_INTERVAL = 3.0f;
     private static final float MIN_INTERVAL = 0.1f;
     private Random rand = new Random();
     private static final float WAVE_INTERVAL = 30.0f;

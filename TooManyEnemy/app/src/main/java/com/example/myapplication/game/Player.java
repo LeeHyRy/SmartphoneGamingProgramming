@@ -14,7 +14,6 @@ public class Player extends Sprite {
     private static final float FIGHTER_WIDTH= 64f * 0.03f;
     private static final float FIGHTER_HEIGHT= 64f * 0.03f;
     private float spriteframeTime;
-    public float x, y;
 
     private static final Rect[] rects = new Rect[] {
             new Rect(  0, 0,   0 + 32, 32),
@@ -30,6 +29,11 @@ public class Player extends Sprite {
                 FIGHTER_WIDTH,
                 FIGHTER_HEIGHT
         );
+    }
+
+    public void move(float dx, float dy) {
+        moveTo(x + dx* BaseScene.frameTime, y + dy* BaseScene.frameTime);
+        fixDstRect();
     }
 
     public void update() {

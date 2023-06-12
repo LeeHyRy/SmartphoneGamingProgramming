@@ -101,14 +101,14 @@ public class Fly extends SheetSprite implements IRecyclable {
         if (rects_array == null) {
             int w = bitmap.getWidth();
             int h = bitmap.getHeight();
-            rects_array = new Rect[Type.COUNT.ordinal()][];
+            int gapW = w/7;
+            int gapH = h/5;
+            rects_array = new Rect[1][];
             int x = 0;
-            for (int i = 0; i < Type.COUNT.ordinal(); i++) {
-                rects_array[i] = new Rect[2];
-                for (int j = 0; j < 2; j++) {
-                    rects_array[i][j] = new Rect(x, 0, x+h, h);
-                    x += h;
-                }
+            rects_array[0] = new Rect[6];
+            for (int j = 0; j < 6; j++) {
+                rects_array[0][j] = new Rect(x, gapH, x+gapW, 2*gapH);
+                x += gapW;
             }
         }
     }
@@ -133,7 +133,7 @@ public class Fly extends SheetSprite implements IRecyclable {
         this.distance = 0;
         dx = dy = 0;
         health = maxHealth = type.getMaxHealth() * (0.9f + random.nextFloat() * 0.2f);
-        srcRects = rects_array[type.ordinal()];
+        srcRects = rects_array[0];
 
         pm.getPosTan(0, pos, tan);
         moveTo(pos[0], pos[1]);

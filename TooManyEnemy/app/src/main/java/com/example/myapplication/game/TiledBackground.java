@@ -41,6 +41,8 @@ public class TiledBackground implements IGameObject {
         return this;
     }
 
+
+
     @Override
     public void update() {
         this.x += dx * BaseScene.frameTime;

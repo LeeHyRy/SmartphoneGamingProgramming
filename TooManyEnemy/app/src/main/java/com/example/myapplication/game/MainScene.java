@@ -1,5 +1,7 @@
 package com.example.myapplication.game;
 
+import android.view.MotionEvent;
+
 import java.nio.channels.Selector;
 
 import framework.scene.BaseScene;
@@ -9,6 +11,7 @@ public class MainScene extends BaseScene {
 
     private Player player;
     protected Selector selector;
+    protected Joystick joystick;
     public enum Layer {
         bg, item, monster, player, controller, joystick, COUNT
     }
@@ -25,6 +28,9 @@ public class MainScene extends BaseScene {
         add(Layer.bg, tiledBg);
         add(Layer.controller, new FlyGen());
         add(Layer.player, player);
+        joystick = new Joystick();
+        add(Layer.joystick, joystick);
+
     }
     @Override
     public boolean handleBackKey() {
@@ -35,5 +41,13 @@ public class MainScene extends BaseScene {
         return true;
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int action = event.getAction();
+        float gx = Metrics.toGameX(event.getX());
+        float gy = Metrics.toGameY(event.getY());
+        return joystick.onTouch(action, gx, gy);
+
+    }
 
 }
