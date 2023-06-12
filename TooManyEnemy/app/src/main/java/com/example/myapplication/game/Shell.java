@@ -108,7 +108,7 @@ public class Shell extends Sprite implements IRecyclable {
         this.target = null;
         //scene.score.add(target.score());
         scene.remove(MainScene.Layer.monster, target);
-        Exporb exporb = Exporb.get(target);
+        Exporb exporb = Exporb.get();
         exporb.moveTo(target.getX(), target.getY());
         scene.add(MainScene.Layer.item, exporb);
         for (IGameObject o: scene.getObjectsAt(MainScene.Layer.shell)) {
