@@ -1,0 +1,42 @@
+{
+    "activeFile": "realstage.tmj",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "realstage.tmj": {
+            "scale": 0.8827083333333333,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 240.16993155534578,
+                "y": 480.3398631106915
+            }
+        },
+        "realstage.tmj#Forest Tilesett": {
+            "scaleInDock": 1
+        },
+        "realstage.tmj#Water Tileset": {
+            "scaleInDock": 1
+        },
+        "realstage.tmj#cliffEmbed": {
+            "scaleInDock": 1
+        },
+        "realstage.tmj#propsEmbed": {
+            "scaleInDock": 1
+        }
+    },
+    "last.imagePath": "C:/androidgameprogramming/SmartphoneGamingProgramming/Tileset",
+    "map.lastUsedFormat": "json",
+    "openFiles": [
+        "realstage.tmj"
+    ],
+    "project": "new.tiled-project",
+    "recentFiles": [
+        "realstage.tmj"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}

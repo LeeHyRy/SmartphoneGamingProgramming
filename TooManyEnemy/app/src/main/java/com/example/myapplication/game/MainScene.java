@@ -7,21 +7,24 @@ import framework.view.Metrics;
 
 public class MainScene extends BaseScene {
 
+    private Player player;
     protected Selector selector;
     public enum Layer {
-        bg, item, monster, player, controller, COUNT
+        bg, item, monster, player, controller, joystick, COUNT
     }
     public MainScene() {
-        Metrics.setGameSize(32, 18);
+        player = new Player();
+        Metrics.setGameSize(18, 32);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         initLayers(Layer.COUNT);
-        TiledBackground tiledBg = new TiledBackground("map", "stage1.tmj");
+        TiledBackground tiledBg = new TiledBackground("map", "realstage.tmj");
         add(Layer.bg, tiledBg);
         add(Layer.controller, new FlyGen());
+        add(Layer.player, player);
     }
     @Override
     public boolean handleBackKey() {

@@ -11,8 +11,8 @@ import framework.view.Metrics;
 
 public class Player extends Sprite {
 
-    private static final float FIGHTER_WIDTH= 32f * 0.03f;
-    private static final float FIGHTER_HEIGHT= 32f * 0.03f;
+    private static final float FIGHTER_WIDTH= 64f * 0.03f;
+    private static final float FIGHTER_HEIGHT= 64f * 0.03f;
     private float spriteframeTime;
     public float x, y;
 
