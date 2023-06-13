@@ -10,7 +10,8 @@
 
 ## 주요 개발 요소
 
-![2](https://user-images.githubusercontent.com/76027901/229520491-fc96c18e-2fa6-40c4-8147-65da440c2d4c.png)
+![image](https://github.com/LeeHyRy/SmartphoneGamingProgramming/assets/76027901/b41c94bf-5f03-42da-8ffb-cd500a65dd8d)
+
 
 ## 게임의 흐름
 
@@ -19,8 +20,8 @@
 
 ## 개발 일정
 
-![4](https://user-images.githubusercontent.com/76027901/236857310-882a4649-902e-45cd-8783-c59098f09c99.png)
-![5](https://user-images.githubusercontent.com/76027901/236860791-b564a2aa-70d5-4d36-86ba-e4d7e22c62e8.png)
+![image](https://github.com/LeeHyRy/SmartphoneGamingProgramming/assets/76027901/e656f669-c925-4796-b373-763c52759e19)
+![image](https://github.com/LeeHyRy/SmartphoneGamingProgramming/assets/76027901/82b202f6-bcf5-4b84-b230-95c4d6b8fcc7)
 
 # 코드 설명
 
