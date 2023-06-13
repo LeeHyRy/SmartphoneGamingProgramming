@@ -20,7 +20,7 @@
 ## 개발 일정
 
 ![image](https://github.com/LeeHyRy/SmartphoneGamingProgramming/assets/76027901/e656f669-c925-4796-b373-763c52759e19)
-![image](https://github.com/LeeHyRy/SmartphoneGamingProgramming/ assets/76027901/82b202f6-bcf5-4b84-b230-95c4d6b8fcc7)
+![image](https://github.com/LeeHyRy/SmartphoneGamingProgramming/assets/76027901/82b202f6-bcf5-4b84-b230-95c4d6b8fcc7)
 
 # 코드 설명
 
