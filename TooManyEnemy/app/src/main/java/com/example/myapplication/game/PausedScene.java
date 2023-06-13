@@ -96,17 +96,17 @@ public class PausedScene extends BaseScene {
                 Score nscore = new Score(R.mipmap.gold_number, 11.0f, 17f, 1);
                 nscore.setScore(stat.score.getScore());
                 add(Layer.score, nscore);
+                TitleActivity ta = ((TitleActivity)TitleActivity.context_title);
+                int score = stat.score.getScore();
+                if (ta.getHighScore() < score) {
+                    ta.saveHighScore(score);
+                    ta.setHighScore();
+                }
                 add(Layer.touch, new Button(R.mipmap.btn_ok, 13, 18.5f, 3, 2, new Button.Callback() {
                     @Override
                     public boolean onTouch(Button.Action action) {
                         if (action == Button.Action.pressed) {
                             Sound.stopMusic();
-                            TitleActivity ta = ((TitleActivity)TitleActivity.context_title);
-                            int score = stat.score.getScore();
-                            if (ta.getHighScore() < score) {
-                                ta.saveHighScore(score);
-                                ta.setHighScore();
-                            }
                             finishActivity();
                         }
                         return false;

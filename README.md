@@ -33,23 +33,44 @@
   - getHighScore() : SharedPreferences를 통해 하이스코어 불러오기
   - "MyPrefs"의 "high_score" 변수로 저장됩니다.
 - startGameButton : 게임 화면인 Main Activity를 시작합니다.
-- hsPlusOneBuuton : 디버그(테스트)용 버튼으로, High Score를 1 증가시켜 저장합니다.
+- ~~hsPlusOneBuuton~~ : 디버그(테스트)용 버튼으로, High Score를 1 증가시켜 저장합니다.
 
 ### Main Activity(Game Activity)
 
 - gameView : 게임 뷰
 - MainScene : 게임 씬을 담당하여 다른 게임 오브젝트 중첩
 - Player : 가운데에 위치할 플레이어에 대한 클래스
-- Enemy(미구현) : 적에 대한 클래스
-- ExpOrb(미구현) : 경험치 구슬에 대한 클래스
-- Stat(미구현) : 각 오브젝트가 가질 정보에 대한 하위클래스
-- ScrollBackground : 플레이어가 움직일 때마다 움직일 배경 클래스
+- Shell : 총알에 대한 클래스
+- Joystick : 플레이어를 조종하는 조이스틱에 대한 클래스
+- Enemy(Fly), FlyGen : 적에 대한 클래스
+- ExpOrb : 경험치 구슬에 대한 클래스
+- Stat : 플레이어가 가질 정보에 대한 하위클래스
+- ~~ScrollBackground~~ : 플레이어가 움직일 때마다 움직일 배경 클래스
+- TiledBackground : 플레이어가 돌아다니는 배경공간
+- PausedScene : 두 일시정지 씬에 대한 클래스
+  - case 1: 레벨업에 대한 일시정지 씬
+  - case 2: 게임오버에 대한 일시정지 씬
+
+### Frameworks
+
+- objects
+  - Sprite, SheetSprite, Score, Button
+- res
+  - BitmapPool, Sound
+- scene
+  - BaseScene, RecycleBin
+- tiled
+  - MapLoader, TiledLayer, TiledMap, TiledTileset
+- util
+  - CollisionHelper, Gauge
+- view
+  - GameView, Metrics
 
 # 어려워서 추가적으로 찾아본 부분
 
 - 자동생성되는 BuildConfig에 대한 조정 (해결)
 - SharedPreferences 사용 (해결)
-- 조이스틱 구현
+- 조이스틱 구현 (해결)
 
 # 자료 출처
 
