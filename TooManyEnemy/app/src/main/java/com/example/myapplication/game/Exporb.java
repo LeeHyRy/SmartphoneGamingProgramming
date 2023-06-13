@@ -7,6 +7,7 @@ import com.example.myapplication.R;
 
 import framework.interfaces.IRecyclable;
 import framework.objects.Sprite;
+import framework.res.Sound;
 import framework.scene.BaseScene;
 import framework.scene.RecycleBin;
 
@@ -18,6 +19,7 @@ public class Exporb extends Sprite implements IRecyclable {
     private int exp = 1;
     private Rect srcRect
             = new Rect(gap*2, gap*2, gap*3, gap*3);
+    private MainScene scene = (MainScene) BaseScene.getTopScene();
 
     private Exporb(){
         super(
@@ -66,7 +68,7 @@ public class Exporb extends Sprite implements IRecyclable {
         if (distance > 0.5f)
             speed = Math.min(speed+BaseScene.frameTime, 30.f);
         else {
-            MainScene scene = (MainScene) BaseScene.getTopScene();
+            Sound.playEffect(R.raw.pop);
             scene.remove(MainScene.Layer.item, this);
             player.stat.getExp(exp);
         }

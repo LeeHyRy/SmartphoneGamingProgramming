@@ -21,13 +21,13 @@ public class Fly extends SheetSprite implements IRecyclable {
     public static final String TAG = Fly.class.getSimpleName();
     private Type type;
     private float speed, distance;
-    private float angle;
     private float dx, dy;
     private float health, maxHealth;
     private static Gauge gauge;
     private Player player;
 
     private static Random random = new Random();
+    private MainScene scene = (MainScene) BaseScene.getTopScene();
 
 
     public enum Type {
@@ -122,14 +122,12 @@ public class Fly extends SheetSprite implements IRecyclable {
             moveY = (dy / distance) * speed;
         }
         if (distance < 1.5f){
-            MainScene scene = (MainScene) BaseScene.getTopScene();
             player.stat.getDamage(Math.round(this.health));
             scene.remove(MainScene.Layer.monster, this);
             return;
         }
 
         moveTo(x + moveX * BaseScene.frameTime, y + moveY * BaseScene.frameTime);
-        angle = (float) Math.toDegrees(Math.atan2(moveY, moveX));
     }
 
     private float[] pos = new float[2];
@@ -157,10 +155,7 @@ public class Fly extends SheetSprite implements IRecyclable {
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.save();
-        canvas.rotate(angle, x, y);
         super.draw(canvas);
-        canvas.restore();
         float size = width * 2 / 3;
         if (gauge == null) {
             gauge = new Gauge(0.2f, R.color.teal_200, R.color.black);

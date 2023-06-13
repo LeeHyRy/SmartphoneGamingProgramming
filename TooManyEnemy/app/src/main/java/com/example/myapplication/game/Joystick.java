@@ -36,11 +36,13 @@ public class Joystick extends Sprite {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
                 handleJoystickMovement(gx, gy);
+                player.isWalk = true;
                 break;
             case MotionEvent.ACTION_UP:
                 dx = 0;
                 dy = 0;
                 moveTo(centerX, centerY);
+                player.isWalk = false;
                 break;
         }
 

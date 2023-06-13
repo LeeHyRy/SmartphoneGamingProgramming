@@ -7,6 +7,7 @@ import android.content.Context;
 import framework.objects.Button;
 import framework.objects.Score;
 import framework.objects.Sprite;
+import framework.res.Sound;
 import framework.scene.BaseScene;
 
 import com.example.myapplication.R;
@@ -87,6 +88,8 @@ public class PausedScene extends BaseScene {
             }));
             break;
             default:
+                Sound.stopMusic();
+                Sound.playMusic(R.raw.gameover);
                 initLayers(Layer.COUNT);
                 add(Layer.bg, new Sprite(R.mipmap.trans_50b, 9.0f, 16f, 18, 32));
                 add(Layer.bg, new Sprite(R.mipmap.gameoverui, 9.0f, 16f, 17.2f, 12));
@@ -97,6 +100,7 @@ public class PausedScene extends BaseScene {
                     @Override
                     public boolean onTouch(Button.Action action) {
                         if (action == Button.Action.pressed) {
+                            Sound.stopMusic();
                             TitleActivity ta = ((TitleActivity)TitleActivity.context_title);
                             int score = stat.score.getScore();
                             if (ta.getHighScore() < score) {

@@ -1,6 +1,7 @@
 package com.example.myapplication.game;
 
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Rect;
 
 import com.example.myapplication.R;
@@ -24,10 +25,17 @@ public class Player extends Sprite {
     public Stat stat = new Stat();
     public float attackAngle = -90;
     private Gauge expGauge, hpGauge;
+    public boolean isWalk = false;
 
-    private static final Rect[] rects = new Rect[] {
+    private static final Rect[][] rects = {new Rect[] {
             new Rect(  0, 0,   0 + 32, 32),
             new Rect( 32, 0,  32 + 32, 32)
+    }, new Rect[]{
+            new Rect(0, 64, 0 + 32, 96),
+            new Rect(32, 64, 32 + 32, 96),
+            new Rect(64, 64, 64 + 32, 96),
+            new Rect(96, 64, 96 + 32, 96)
+    }
     };
 
     public Player()
@@ -99,14 +107,14 @@ public class Player extends Sprite {
 
     @Override
     public void draw(Canvas canvas) {
-        int rollIndex = (int)(spriteframeTime)%2;
-        canvas.drawBitmap(bitmap, rects[rollIndex], dstRect, null);
+        int rollIndex = (int)(spriteframeTime)%(isWalk ? 4 : 2);
+        canvas.drawBitmap(bitmap, rects[(isWalk ? 1 : 0)][rollIndex], dstRect, null);
 
         if (expGauge == null){
             expGauge = new Gauge(0.4f, R.color.exp, R.color.black);
             hpGauge =  new Gauge(0.2f, R.color.hp, R.color.black);
         }
         expGauge.draw(canvas, 0, 31, 1f, 18f, (float)stat.exp/(float)stat.levelupExp);
-        hpGauge.draw(canvas, x - width / 2, y + height / 2, width,1f, (float)stat.hp / stat.maxHp);
+        hpGauge.draw(canvas, x - width / 2, y + height / 2 + 0.2f, width,1f, (float)stat.hp / stat.maxHp);
     }
 }
